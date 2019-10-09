@@ -5,7 +5,7 @@ import argparse
 from faker import Faker
 from random import randrange
 
-__version__ = '0.0.2'
+__version__ = '0.0.3'
 
 class RandomCRUD:
 
@@ -78,17 +78,19 @@ class RandomCRUD:
             return None
 
     def run_operations(self, times = 1):
-        for index in range(1, times):
+        for index in range(0, times):
+            print('Executing operation number {0}'.format(index + 1))
             operation = randrange(2)
             if operation == 0: #insert
-                print('Running a random insert operation')
+                print(' --> Running a random insert operation')
                 self.do_random_insert()
             if operation == 1:  # update
-                print('Running a random update operation')
+                print(' --> Running a random update operation')
                 self.do_random_update()
             if operation == 2:  # delete
-                print('Running a random delete operation')
+                print(' --> Running a random delete operation')
                 self.do_random_delete()
+        print('{0} total operations run'.format(times))
 
 if __name__ == '__main__':
     description = 'RandomCRUD is a program that produces random CRUD into a ODBC connection for a table.'
