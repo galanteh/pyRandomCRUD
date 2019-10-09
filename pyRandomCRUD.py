@@ -1,7 +1,11 @@
 import pyodbc
 import random
+import sys
+import argparse
 from faker import Faker
 from random import randrange
+
+__version__ = '0.0.2'
 
 class RandomCRUD:
 
@@ -87,5 +91,25 @@ class RandomCRUD:
                 self.do_random_delete()
 
 if __name__ == '__main__':
-    rop = RandomCRUD()
-    rop.run_operations(10)
+    description = 'RandomCRUD is a program that produces random CRUD into a ODBC connection for a table.'
+    prog = 'randomcrud.exe'
+    epilog = 'Developed by Hernan J. Galante <hernan_galante@hotmail.com>. License under Apache License 2.0'
+    parser = argparse.ArgumentParser(description=description, prog=prog, epilog=epilog)
+    parser.add_argument('--version', action='version', version='%(prog)s {version}'.format(version=__version__))
+    parser.add_argument('-s', '--start', dest='start', action='store',
+                        help='Start running a random set of operations with a number of times to repeat as argument.')
+    args = parser.parse_args()
+    n_args = sum([1 for a in vars(args).values() if a])
+    if n_args == 0:
+        parser.print_help()
+        sys.exit(0)
+    if args.start:
+        try:
+            number_ops = int(args.start)
+            rop = RandomCRUD()
+            rop.run_operations(number_ops)
+            sys.exit(0)
+        except Exception as e:
+            print('*** Error has been detected: {0}'.format(e))
+            parser.print_help(sys.stderr)
+            sys.exit(0)
