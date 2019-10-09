@@ -1,4 +1,4 @@
-# Random ops
+# Random CRUD
 Python script that makes a lot of random operations over a simple table. 
 In our case, the table is Customers with the following definition:
 
